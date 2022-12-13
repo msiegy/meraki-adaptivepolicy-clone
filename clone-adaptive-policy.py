@@ -5,7 +5,6 @@
 import meraki
 import os
 from dotenv import load_dotenv
-import ipdb
 load_dotenv()
 MERAKI_DASHBOARD_API_KEY = os.environ.get('MERAKI_DASHBOARD_API_KEY')
 FROM_ORGID = os.environ.get('FROM_ORGID')
@@ -62,14 +61,12 @@ def copyAdaptivePolicies(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
                 print('\n\n', acls)
             
                 for newacl in newACLs:
-                    #ipdb.set_trace()
                     if acl['name'] == newacl['name']:
                         acl['id'] = newacl['aclId']
         try:
             print("\n\nAttempting to create policy: ", sourceGroup, destinationGroup, acls, lastEntryRule)
             dashboard.organizations.createOrganizationAdaptivePolicyPolicy(TO_ORGID, sourceGroup=sourceGroup, destinationGroup=destinationGroup, acls=acls, lastEntryRule=lastEntryRule)
         except:
-            #ipdb.set_trace()
             pass
 
 copyAdaptiveGroups(FROM_ORGID, TO_ORGID)
