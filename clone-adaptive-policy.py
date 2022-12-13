@@ -58,8 +58,6 @@ def copyAdaptivePolicies(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
 
         if acls:  #first check if there is an acl for this policy. some ACLs wiil have multiple entries and similar to above their new IDs will need to be looked up.
             for acl in acls:
-                print('\n\n', acls)
-            
                 for newacl in newACLs:
                     if acl['name'] == newacl['name']:
                         acl['id'] = newacl['aclId']
