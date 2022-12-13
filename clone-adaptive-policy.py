@@ -25,9 +25,6 @@ def copyAdaptiveGroups(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
         except:
             pass
 
-#APPolicies = dashboard.organizations.getOrganizationAdaptivePolicyPolicies(organizationId = FROM_ORGID)
-#APAcls = dashboard.organizations.getOrganizationAdaptivePolicyAcls(organizationId=FROM_ORGID)
-
 def copyAdaptiveACLs(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
     APAcls = dashboard.organizations.getOrganizationAdaptivePolicyAcls(organizationId = FROM_ORGID)
     for acl in APAcls:
@@ -48,7 +45,7 @@ def copyAdaptivePolicies(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
     newACLs = dashboard.organizations.getOrganizationAdaptivePolicyAcls(TO_ORGID)
 
     for policies in APPolicies:
-        #source and dest group values will not work, we need to find the groupIDs first since they will be different from org to org.
+        #original source and dest group id values will not work, we need to find the new groupIDs first since they will be different from org to org.
         #so inside loop, get name of current src and dst groups then loop through previously stored TO_ORGID group listing to extact relevant IDs.
         sourceGroup=policies['sourceGroup']
         destinationGroup=policies['destinationGroup']
@@ -60,7 +57,7 @@ def copyAdaptivePolicies(FROM_ORGID=FROM_ORGID, TO_ORGID=TO_ORGID):
             if group['name'] == destinationGroup['name']:
                 destinationGroup['id'] = group['groupId']
 
-        if acls:  #first check if there is an acl for this policy... some ACLs wiil have multiple entries...
+        if acls:  #first check if there is an acl for this policy. some ACLs wiil have multiple entries and similar to above their new IDs will need to be looked up.
             for acl in acls:
                 print('\n\n', acls)
             
